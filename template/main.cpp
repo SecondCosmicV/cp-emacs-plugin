@@ -9,9 +9,9 @@ void solve(void){
 int main(void){
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
-    ll T;
-    cin>>T;
-    while(T--)
+    ll t;
+    cin>>t;
+    while(t--)
         solve();
     return 0;
 }
