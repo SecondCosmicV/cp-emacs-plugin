@@ -3,7 +3,7 @@
   (let ((problem-id (read-string "Problem ID: ")))
     (copy-directory
       "~/.local/share/cp-emacs-plugin/template"
-      (expand-file-name problem-id)))
+      problem-id))
   (revert-buffer))
 (defun cp/build ()
   (interactive)
@@ -30,6 +30,23 @@
                 (insert "WA")))
               (insert "\n")
             (setq test-case (+ test-case 1))))))))
+(defun cp/load ()
+  (interactive)
+  (insert-file-contents
+    (let ((snippets-dir-path "~/.local/share/dsa-snippets"))
+      (expand-file-name
+        (concat
+          (completing-read
+            "Snippet ID: "
+            (seq-filter
+              (lambda (x)
+                (not (member x '("." ".."))))
+              (mapcar
+                (lambda (x)
+                  (string-trim-right (file-name-nondirectory x) "\\.cpp"))
+                (directory-files snippets-dir-path t))))
+          ".cpp")
+        snippets-dir-path))))
 (defvar cp/cp-mode-map
   (let ((map (make-sparse-keymap)))
     (define-key map (kbd "<f5>") 'cp/test)
