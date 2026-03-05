@@ -7,7 +7,7 @@
   (revert-buffer))
 (defun cp/build ()
   (interactive)
-  (compile "g++ -g -Wall -o main main.cpp"))
+  (compile "g++ -g -Wall -std=c++23 main.cpp -o main"))
 (defun cp/test ()
   (interactive)
   (let ((buff (get-buffer-create "*cp-test-results*")))
