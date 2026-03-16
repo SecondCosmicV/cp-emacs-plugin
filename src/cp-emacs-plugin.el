@@ -19,13 +19,16 @@
         (let ((test-case 1))
           (while (file-exists-p (format "in%d.txt" test-case))
             (insert (format "%d. " test-case))
-            (let ((actual (shell-command-to-string (format "./main < in%d.txt" test-case)))
-                  (correct (with-temp-buffer
-                             (insert-file-contents (format "out%d.txt" test-case))
-                             (buffer-string))))
-              (if (string-equal
-                    (string-trim actual)
-                    (string-trim correct))
+            (let (
+              (actual (shell-command-to-string (format "./main < in%d.txt" test-case)))
+              (correct
+                (with-temp-buffer
+                  (insert-file-contents (format "out%d.txt" test-case))
+                  (buffer-string))))
+              (if
+                (string-equal
+                  (string-trim actual)
+                  (string-trim correct))
                 (insert "AC")
                 (insert "WA")))
               (insert "\n")
