@@ -1,9 +1,8 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-rm -rf ~/.emacs.d/plugins/cp-emacs-plugin
-mkdir -p ~/.emacs.d/plugins
-cp -r src ~/.emacs.d/plugins/cp-emacs-plugin
-rm -rf ~/.local/share/cp-emacs-plugin
-mkdir -p ~/.local/share/cp-emacs-plugin
-cp -r template ~/.local/share/cp-emacs-plugin/
+set -ex
+install -m644 cp-mode.el ~/.emacs.d/
+rm -rf ~/.local/share/cp-mode
+mkdir -p ~/.local/share/cp-mode
+cp -r template ~/.local/share/cp-mode/
 

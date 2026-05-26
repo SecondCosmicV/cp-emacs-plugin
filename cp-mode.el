@@ -1,14 +1,14 @@
-(defun cp/new ()
+(defun cp-mode-new ()
   (interactive)
   (let ((problem-id (read-string "Problem ID: ")))
     (copy-directory
-      "~/.local/share/cp-emacs-plugin/template"
+      "~/.local/share/cp-mode/template"
       problem-id))
   (revert-buffer))
-(defun cp/build ()
+(defun cp-mode-build ()
   (interactive)
   (compile "g++ -g -Wall -std=c++23 main.cpp -o main"))
-(defun cp/test ()
+(defun cp-mode-test ()
   (interactive)
   (let ((buff (get-buffer-create "*cp-test-results*")))
     (display-buffer buff)
@@ -33,7 +33,7 @@
                 (insert "WA")))
               (insert "\n")
             (setq test-case (+ test-case 1))))))))
-(defun cp/load ()
+(defun cp-mode-load ()
   (interactive)
   (insert-file-contents
     (let ((snippets-dir-path "~/.local/share/dsa-snippets"))
@@ -50,14 +50,11 @@
                 (directory-files snippets-dir-path t))))
           ".cpp")
         snippets-dir-path))))
-(defvar cp/cp-mode-map
-  (let ((map (make-sparse-keymap)))
-    (define-key map (kbd "<f5>") 'cp/test)
-    (define-key map (kbd "<f6>") 'cp/build)
-    map))
-(define-minor-mode cp/cp-mode
+(define-minor-mode cp-mode
   "Minor mode for competitive programming."
   :lighter "CP"
-  :keymap cp/cp-mode-map)
-(provide 'cp-emacs-plugin)
+  :keymap (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "<f5>") 'cp-mode-test)
+    (define-key map (kbd "<f6>") 'cp-mode-build)
+    map))
 
