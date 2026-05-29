@@ -57,4 +57,8 @@
     (define-key map (kbd "<f5>") 'cp-mode-test)
     (define-key map (kbd "<f6>") 'cp-mode-build)
     map))
+(add-to-list 'display-buffer-alist (list
+  (lambda (buffer action) (bound-and-true-p cp-mode))
+  'display-buffer-in-side-window
+  '((side . bottom) (window-height . 16))))
 
