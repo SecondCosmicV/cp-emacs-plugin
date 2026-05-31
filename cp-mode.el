@@ -20,15 +20,17 @@
           (while (file-exists-p (format "in%d.txt" test-case))
             (insert (format "%d. " test-case))
             (let (
-              (actual (shell-command-to-string (format "./main < in%d.txt" test-case)))
+              (actual
+                (with-temp-buffer
+                  (insert (shell-command-to-string (format "./main < in%d.txt" test-case)))
+                  (delete-trailing-whitespace)
+                  (buffer-string)))
               (correct
                 (with-temp-buffer
                   (insert-file-contents (format "out%d.txt" test-case))
+                  (delete-trailing-whitespace)
                   (buffer-string))))
-              (if
-                (string-equal
-                  (string-trim actual)
-                  (string-trim correct))
+              (if (string-equal actual correct)
                 (insert "AC")
                 (insert "WA")))
               (insert "\n")
